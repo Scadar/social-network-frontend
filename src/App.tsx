@@ -4,7 +4,9 @@ import {authApi} from './services/authService';
 import GlobalLoading from './components/UI/GlobalLoading';
 import PrivateRoutes from './routes/PrivateRoutes';
 import PublicRoutes from './routes/PublicRoutes';
-import SocketContainer from './SocketContainer';
+import {baseUrl} from './services/config/query';
+import {getTokenFromLocalStorage, TokenType} from './utils/localStorage';
+import {SocketProvider} from './socket/SocketProvider';
 
 const App: FC = () => {
 
@@ -22,9 +24,16 @@ const App: FC = () => {
 
   if (user) {
     return (
-        <SocketContainer>
+        <SocketProvider
+            uri={baseUrl!}
+            options={{
+              auth: {
+                token: `Bearer ${getTokenFromLocalStorage(TokenType.ACCESS)}`,
+              },
+            }}
+        >
           <PrivateRoutes/>
-        </SocketContainer>
+        </SocketProvider>
     );
   } else {
     return <PublicRoutes/>;

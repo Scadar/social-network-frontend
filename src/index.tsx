@@ -9,7 +9,6 @@ import {Provider} from 'react-redux';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from 'react-router-dom';
 import './index.css';
-import IoProvider from './socket/IoProvider';
 
 ReactDOM.render(
     <React.StrictMode>
@@ -17,9 +16,7 @@ ReactDOM.render(
         <CssBaseline/>
         <Provider store={store}>
           <BrowserRouter>
-            <IoProvider>
-              <App/>
-            </IoProvider>
+            <App/>
           </BrowserRouter>
         </Provider>
       </ThemeContainer>
