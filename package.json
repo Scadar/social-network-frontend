@@ -1,7 +1,7 @@
 {
   "name": "social-network-frontend",
   "version": "0.0.1",
-  "description": "",
+  "description": "Full Stack social network application. Created with Express, Socket.IO, React and Typescript",
   "email": "teghtml@yandex.ru",
   "author": "Miroshnikov Roman <teghtml@yandex.ru> (https://vk.com/romantlt)",
   "keywords": [
