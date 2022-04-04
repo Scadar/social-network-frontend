@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, memo} from 'react';
 import {GroupedMessage} from '../../../store/slices/messages';
 import {Box, Link, Paper, Stack, Typography} from '@mui/material';
 import UserAvatar from '../../../components/user/UserAvatar';
@@ -27,7 +27,7 @@ const formatDate = (date: Date): string => {
   return `${hours}:${minutes}  ${day}/${month}`;
 };
 
-const MessageGroup: FC<MessageGroupProps> = ({group, ownerId}) => {
+const MessageGroup: FC<MessageGroupProps> = memo(({group, ownerId}) => {
   const isOwner = ownerId === group.senderDto._id;
   return (
       <Box>
@@ -113,6 +113,8 @@ const MessageGroup: FC<MessageGroupProps> = ({group, ownerId}) => {
         }
       </Box>
   );
-};
+}, (prev, next) => {
+  return prev.group.body.length === next.group.body.length;
+});
 
 export default MessageGroup;
