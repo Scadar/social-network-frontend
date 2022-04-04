@@ -2,7 +2,6 @@ import React, {FC, memo} from 'react';
 import {GroupedMessage} from '../../../store/slices/messages';
 import {Box, Link, Paper, Stack, Typography} from '@mui/material';
 import UserAvatar from '../../../components/user/UserAvatar';
-import {blue, grey} from '@mui/material/colors';
 
 type MessageGroupProps = {
   group: GroupedMessage
@@ -28,7 +27,6 @@ const formatDate = (date: Date): string => {
 };
 
 const MessageGroup: FC<MessageGroupProps> = memo(({group, ownerId}) => {
-  const isOwner = ownerId === group.senderDto._id;
   return (
       <Box>
         <Stack
@@ -67,11 +65,11 @@ const MessageGroup: FC<MessageGroupProps> = memo(({group, ownerId}) => {
             return (
                 <Box
                     key={msg._id}
-                    sx={theme => ({
+                    sx={{
                       minHeight: '40px',
                       overflow: 'hidden',
                       p: 1,
-                    })}
+                    }}
                 >
 
                   <Stack
@@ -87,9 +85,10 @@ const MessageGroup: FC<MessageGroupProps> = memo(({group, ownerId}) => {
                             tableLayout: 'fixed',
                             width: '100%',
                             wordWrap: 'break-word',
-                            backgroundColor: isOwner ? blue[50] : grey[100],
+
                             p: 1,
                           }}
+                          variant={"outlined"}
                       >
                         <Typography sx={{fontSize: '0.9rem'}}>
                           {msg.message}
