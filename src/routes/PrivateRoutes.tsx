@@ -8,6 +8,7 @@ import FriendsPage from '../pages/friends/FriendsPage';
 import ChatPeers from '../pages/chat/chatPeers/ChatPeers';
 import ChatAdd from '../pages/chat/chatAdd/ChatAdd';
 import ChatRoom from '../pages/chat/chatRoom/ChatRoom';
+import DiskPage from '../pages/disk/DiskPage';
 
 const PrivateRoutes: FC = () => {
   return (
@@ -17,6 +18,7 @@ const PrivateRoutes: FC = () => {
           <Route path="/profile/:userId" element={<ProfilePage/>}/>
           <Route path="/search" element={<SearchPage/>}/>
           <Route path="/friends" element={<FriendsPage/>}/>
+          <Route path="/disk" element={<DiskPage/>}/>
           <Route path="messages/">
             <Route index element={<Navigate to={'/messages/peers'}/>}/>
             <Route path="peers" element={<ChatPeers/>}/>

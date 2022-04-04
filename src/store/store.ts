@@ -7,6 +7,7 @@ import {friendApi} from '../services/friendService';
 import {roomApi} from '../services/roomService';
 import {chatMessageApi} from '../services/chatMessageService';
 import {searchApi} from '../services/searchService';
+import {diskApi} from '../services/diskService';
 
 const rootReducer = combineReducers({
   [authApi.reducerPath]: authApi.reducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   [roomApi.reducerPath]: roomApi.reducer,
   [chatMessageApi.reducerPath]: chatMessageApi.reducer,
   [searchApi.reducerPath]: searchApi.reducer,
+  [diskApi.reducerPath]: diskApi.reducer,
   auth,
   messages,
 });
@@ -29,6 +31,7 @@ export const store = configureStore({
         roomApi.middleware,
         chatMessageApi.middleware,
         searchApi.middleware,
+        diskApi.middleware,
       ]),
 });
 

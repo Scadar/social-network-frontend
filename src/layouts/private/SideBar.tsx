@@ -54,7 +54,7 @@ const createMenu = (id: string) => {
     {
       label: 'Диск',
       icon: <SaveOutlinedIcon/>,
-      path: '/store',
+      path: '/disk',
     },
     {
       label: 'Поиск',
