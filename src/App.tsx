@@ -30,6 +30,7 @@ const App: FC = () => {
               auth: {
                 token: `Bearer ${getTokenFromLocalStorage(TokenType.ACCESS)}`,
               },
+              upgrade: true,
             }}
         >
           <PrivateRoutes/>

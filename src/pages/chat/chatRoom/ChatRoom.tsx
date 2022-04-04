@@ -12,12 +12,14 @@ import {ChatEvent, RoomsEvent} from '../../../models/socket';
 import {addMessagesToStart} from '../../../store/slices/messages';
 import {IChatMessage} from '../../../models/chatMessage';
 import {useSocket} from '../../../socket/useSocket';
+import {useAuthenticatedUser} from '../../../hooks/useAuthenticatedUser';
 
 const ChatRoom: FC = () => {
   const {id: roomId} = useParams();
   const dispatch = useAppDispatch();
   const socket = useSocket();
 
+  const {_id: ownerId} = useAuthenticatedUser()
   const {data: partner, isLoading: partnerLoading, error} = roomApi.useFindRoomInfoQuery(roomId!);
 
   const handleSendMessage = (message: string) => {
@@ -59,6 +61,7 @@ const ChatRoom: FC = () => {
           center={
             <ChatRoomCenterPanel
                 chatRoomId={roomId!}
+                ownerId={ownerId}
             />
           }
           bottom={

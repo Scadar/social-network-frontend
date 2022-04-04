@@ -8,12 +8,14 @@ import {useAppDispatch} from '../../../hooks/useAppDispatch';
 import {clearMessages} from '../../../store/slices/messages';
 import Loading from '../../../components/UI/Loading';
 import FlexCenter from '../../../components/UI/FlexCenter';
+import MessageGroup from './MessageGroup';
 
 type ChatRoomCenterPanelProps = {
   chatRoomId: string
+  ownerId: string
 }
 
-const ChatRoomCenterPanel: FC<ChatRoomCenterPanelProps> = ({chatRoomId}) => {
+const ChatRoomCenterPanel: FC<ChatRoomCenterPanelProps> = ({chatRoomId, ownerId}) => {
 
   const pageSize = 40;
   const [skip, setSkip] = useState(0);
@@ -24,7 +26,8 @@ const ChatRoomCenterPanel: FC<ChatRoomCenterPanelProps> = ({chatRoomId}) => {
       {refetchOnMountOrArgChange: true},
   );
 
-  const {messages} = useAppSelector(state => state.messages);
+  const {messages, groupedMessages} = useAppSelector(state => state.messages);
+
 
   useEffect(() => {
     return () => {
@@ -49,11 +52,12 @@ const ChatRoomCenterPanel: FC<ChatRoomCenterPanelProps> = ({chatRoomId}) => {
             }
         >
           {
-            messages.map(msg => {
+            groupedMessages.map(group => {
               return (
-                  <Message
-                      key={msg._id}
-                      message={msg}
+                  <MessageGroup
+                      key={group._id}
+                      group={group}
+                      ownerId={ownerId}
                   />
               );
             })

@@ -1,10 +1,12 @@
 import React, {FC, memo} from 'react';
 import {IChatMessage} from '../../../models/chatMessage';
-import {Box, Link, Stack, Typography} from '@mui/material';
+import {Box, Link, Paper, Stack, Typography} from '@mui/material';
 import UserAvatar from '../../../components/user/UserAvatar';
+import {blue, grey} from '@mui/material/colors';
 
 type MessageProps = {
   message: IChatMessage
+  ownerId: string
 }
 
 const formatDate = (date: Date): string => {
@@ -25,7 +27,8 @@ const addZero = (value: number): string => {
   return strValue;
 };
 
-const Message: FC<MessageProps> = memo(({message}) => {
+const Message: FC<MessageProps> = memo(({message, ownerId}) => {
+  const isOwner = ownerId === message.senderDto._id;
   const createdAt = formatDate(new Date(message.createdAt));
 
   return (
@@ -45,12 +48,15 @@ const Message: FC<MessageProps> = memo(({message}) => {
             direction="row"
             alignItems="flex-start"
         >
-          <UserAvatar
-              user={message.senderDto}
-              sx={{
-                mr: 1,
-              }}
-          />
+          {
+            !isOwner &&
+              <UserAvatar
+                  user={message.senderDto}
+                  sx={{
+                    mr: 1,
+                  }}
+              />
+          }
           <Stack
               spacing={1}
               direction="column"
@@ -96,9 +102,16 @@ const Message: FC<MessageProps> = memo(({message}) => {
                   wordWrap: 'break-word',
                 }}
             >
-              <Typography sx={{fontSize: '0.9rem'}}>
-                {message.message}
-              </Typography>
+              <Paper
+                sx={{
+                  p: 1,
+                  backgroundColor: isOwner ? blue[50] : grey[100]
+                }}
+              >
+                <Typography sx={{fontSize: '0.9rem'}}>
+                  {message.message}
+                </Typography>
+              </Paper>
             </Box>
           </Stack>
         </Stack>

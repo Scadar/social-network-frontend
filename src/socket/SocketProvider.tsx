@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useCallback, useState} from 'react';
-import {io, ManagerOptions, Socket} from 'socket.io-client';
+import io, {Socket, ManagerOptions} from 'socket.io-client';
 import {SocketOptions as _SocketOptions} from 'socket.io-client/build/esm/socket';
 
 interface ProviderProps {

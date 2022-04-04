@@ -1,7 +1,7 @@
 import {createApi} from '@reduxjs/toolkit/query/react';
 import {baseQuery} from './config/query';
 import {IChatMessage} from '../models/chatMessage';
-import {addMessages} from '../store/slices/messages';
+import {addMessagesToEnd} from '../store/slices/messages';
 
 export const chatMessageApi = createApi({
   reducerPath: 'chatMessageApi',
@@ -15,7 +15,7 @@ export const chatMessageApi = createApi({
       }),
       onQueryStarted(arg, {queryFulfilled, dispatch}) {
         queryFulfilled.then(({data}) => {
-          dispatch(addMessages(data));
+          dispatch(addMessagesToEnd(data));
         });
       },
     }),
