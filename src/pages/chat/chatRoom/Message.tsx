@@ -1,11 +1,11 @@
 import React, {FC, memo} from 'react';
-import {IChatMessage} from '../../../models/chatMessage';
+import {IChatMessageWithSenderDto} from '../../../models/chatMessage';
 import {Box, Link, Paper, Stack, Typography} from '@mui/material';
 import UserAvatar from '../../../components/user/UserAvatar';
 import {blue, grey} from '@mui/material/colors';
 
 type MessageProps = {
-  message: IChatMessage
+  message: IChatMessageWithSenderDto
   ownerId: string
 }
 

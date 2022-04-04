@@ -3,15 +3,21 @@ import {Box, Stack, Typography} from '@mui/material';
 import UserAvatar from '../../../components/user/UserAvatar';
 import {ChatRoomType, IChatRoom} from '../../../models/chatModels';
 import {useNavigate} from 'react-router-dom';
+import {IChatMessage} from '../../../models/chatMessage';
+import {IUser} from '../../../models/authModels';
 
 type UserCardMessageProps = {
   chatRoom: IChatRoom
   withDivider: boolean
+  lastMessage: IChatMessage
+  me: IUser
 }
 
-const UserCardMessage: FC<UserCardMessageProps> = ({chatRoom, withDivider}) => {
+const UserCardMessage: FC<UserCardMessageProps> = ({chatRoom, withDivider, lastMessage, me}) => {
 
   const navigate = useNavigate();
+
+  const lastMessageUser = lastMessage.senderId === me._id ? me : chatRoom.user;
 
   const getRoomName = () => {
     if (chatRoom.type === ChatRoomType.PRIVATE) {
@@ -37,6 +43,8 @@ const UserCardMessage: FC<UserCardMessageProps> = ({chatRoom, withDivider}) => {
                 cursor: 'pointer',
               },
               boxShadow: `0 1px 0 0 ${theme.palette.divider}`,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
             })}
             onClick={() => goToDialog(chatRoom._id)}
         >
@@ -61,9 +69,12 @@ const UserCardMessage: FC<UserCardMessageProps> = ({chatRoom, withDivider}) => {
                 <Typography fontWeight="medium">{getRoomName()}</Typography>
                 <Typography variant="caption" color="text.secondary">15:17</Typography>
               </Stack>
-              <Typography color="text.secondary" fontSize={14}>
-                Lorem ipsum dolor sit amet.
-              </Typography>
+              <Stack direction={'row'} spacing={1} alignItems={'center'}>
+                <UserAvatar user={lastMessageUser} size={'small'}/>
+                <Typography color="text.secondary" fontSize={14} noWrap>
+                  {lastMessage?.message}
+                </Typography>
+              </Stack>
             </Stack>
           </Box>
         </Stack>

@@ -1,6 +1,12 @@
 import {createApi} from '@reduxjs/toolkit/query/react';
 import {baseQuery} from './config/query';
 import {IChatRoom} from '../models/chatModels';
+import {IChatMessage} from '../models/chatMessage';
+
+export interface IChatRoomWithLastMessage {
+  room: IChatRoom;
+  lastMessage: IChatMessage;
+}
 
 export const roomApi = createApi({
   reducerPath: 'roomApi',
@@ -13,7 +19,7 @@ export const roomApi = createApi({
         body: {targetUserId},
       }),
     }),
-    findAllMyRooms: build.query<IChatRoom[], void>({
+    findAllMyRooms: build.query<IChatRoomWithLastMessage[], void>({
       query: () => ({
         url: '/room',
         method: 'GET',

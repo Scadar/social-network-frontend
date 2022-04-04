@@ -1,5 +1,5 @@
 import {createSlice, current, PayloadAction} from '@reduxjs/toolkit';
-import {IChatMessage} from '../../models/chatMessage';
+import {IChatMessageWithSenderDto} from '../../models/chatMessage';
 import {IUser} from '../../models/authModels';
 
 export type GroupedMessage = {
@@ -14,7 +14,7 @@ export type GroupedMessage = {
 }
 
 export type MessagesState = {
-  messages: IChatMessage[]
+  messages: IChatMessageWithSenderDto[]
   groupedMessages: GroupedMessage[]
 }
 
@@ -23,7 +23,7 @@ const initialState: MessagesState = {
   groupedMessages: [],
 };
 
-const getGroupsFromArray = (messages: IChatMessage[]): GroupedMessage[] => {
+const getGroupsFromArray = (messages: IChatMessageWithSenderDto[]): GroupedMessage[] => {
   const result: GroupedMessage[] = [];
   let prevMsg = null;
   for (let i = 0; i < messages.length; i++) {
@@ -37,7 +37,8 @@ const getGroupsFromArray = (messages: IChatMessage[]): GroupedMessage[] => {
       });
     } else {
       if (prevMsg?.senderDto._id === message.senderDto._id) {
-        result[result.length - 1].body.unshift({_id: message._id, message: message.message, createdAt: message.createdAt});
+        result[result.length - 1].body.unshift(
+            {_id: message._id, message: message.message, createdAt: message.createdAt});
       } else {
         result.push({
           chatRoomId: message.chatRoomId,
@@ -79,7 +80,7 @@ const messagesSlice = createSlice({
   name: 'messages',
   initialState,
   reducers: {
-    addMessagesToEnd(state, action: PayloadAction<IChatMessage[]>) {
+    addMessagesToEnd(state, action: PayloadAction<IChatMessageWithSenderDto[]>) {
       if (state.groupedMessages.length === 0) {
         state.groupedMessages = getGroupsFromArray(action.payload);
       } else {
@@ -88,7 +89,7 @@ const messagesSlice = createSlice({
       }
       state.messages = [...state.messages, ...action.payload];
     },
-    addMessagesToStart(state, action: PayloadAction<IChatMessage[]>) {
+    addMessagesToStart(state, action: PayloadAction<IChatMessageWithSenderDto[]>) {
       if (state.groupedMessages.length === 0) {
         state.groupedMessages = getGroupsFromArray(action.payload);
       } else {
@@ -99,6 +100,7 @@ const messagesSlice = createSlice({
     },
     clearMessages(state) {
       state.messages = [];
+      state.groupedMessages = [];
     },
   },
 });

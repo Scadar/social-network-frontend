@@ -10,7 +10,7 @@ import PageWrapper from '../../../layouts/pageWrapper/PageWrapper';
 import {useAppDispatch} from '../../../hooks/useAppDispatch';
 import {ChatEvent, RoomsEvent} from '../../../models/socket';
 import {addMessagesToStart} from '../../../store/slices/messages';
-import {IChatMessage} from '../../../models/chatMessage';
+import {IChatMessageWithSenderDto} from '../../../models/chatMessage';
 import {useSocket} from '../../../socket/useSocket';
 import {useAuthenticatedUser} from '../../../hooks/useAuthenticatedUser';
 
@@ -23,7 +23,7 @@ const ChatRoom: FC = () => {
   const {data: partner, isLoading: partnerLoading, error} = roomApi.useFindRoomInfoQuery(roomId!);
 
   const handleSendMessage = (message: string) => {
-    socket?.emit(ChatEvent.CHAT_MESSAGE, roomId, {message}, (newMessage: IChatMessage) => {
+    socket?.emit(ChatEvent.CHAT_MESSAGE, roomId, {message}, (newMessage: IChatMessageWithSenderDto) => {
       dispatch(addMessagesToStart([newMessage]));
     });
   };

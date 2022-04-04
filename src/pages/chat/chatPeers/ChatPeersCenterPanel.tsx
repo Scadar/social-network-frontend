@@ -1,15 +1,17 @@
 import React, {FC} from 'react';
 import UserCardMessage from './UserCardMessage';
 import ListWrapper from '../../../components/UI/ListWrapper';
-import {IChatRoom} from '../../../models/chatModels';
 import {Box} from '@mui/material';
+import {IChatRoomWithLastMessage} from '../../../services/roomService';
+import {IUser} from '../../../models/authModels';
 
 type ChatPeersCenterPanelProps = {
-  rooms?: IChatRoom[]
+  rooms?: IChatRoomWithLastMessage[]
   isLoading: boolean
+  me: IUser
 }
 
-const ChatPeersCenterPanel: FC<ChatPeersCenterPanelProps> = ({isLoading, rooms}) => {
+const ChatPeersCenterPanel: FC<ChatPeersCenterPanelProps> = ({isLoading, rooms, me}) => {
   return (
       <Box sx={{height: '100%'}}>
         <ListWrapper
@@ -20,8 +22,10 @@ const ChatPeersCenterPanel: FC<ChatPeersCenterPanelProps> = ({isLoading, rooms})
             rooms?.map((item, index) =>
                 <UserCardMessage
                     key={index}
-                    chatRoom={item}
+                    chatRoom={item.room}
+                    lastMessage={item.lastMessage}
                     withDivider={index !== rooms?.length - 1}
+                    me={me}
                 />,
             )
           }
