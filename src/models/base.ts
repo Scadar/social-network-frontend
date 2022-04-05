@@ -7,6 +7,6 @@ export interface PaginationResponse<T>{
 }
 
 export interface ITimestamp {
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }

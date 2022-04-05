@@ -9,6 +9,9 @@ import {chatMessageApi} from '../services/chatMessageService';
 import {searchApi} from '../services/searchService';
 import {diskApi} from '../services/diskService';
 
+
+//TODO clear store after logout
+
 const rootReducer = combineReducers({
   [authApi.reducerPath]: authApi.reducer,
   [userApi.reducerPath]: userApi.reducer,

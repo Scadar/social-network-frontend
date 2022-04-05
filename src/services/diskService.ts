@@ -15,11 +15,11 @@ export const diskApi = createApi({
       }),
       invalidatesTags: ['File'],
     }),
-    getFilesByParent: build.query<IFile[], { parentId?: string }>({
-      query: ({parentId}) => ({
-        url: `/files`,
-        method: 'GET',
-        params: {parentId},
+    getFilesByPath: build.query<{ file?: IFile, children: IFile[] }, { path: string }>({
+      query: ({path}) => ({
+        url: `/files/byPath`,
+        method: 'POST',
+        body: {path},
       }),
       providesTags: ['File'],
     }),

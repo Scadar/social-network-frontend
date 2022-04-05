@@ -18,7 +18,7 @@ const PrivateRoutes: FC = () => {
           <Route path="/profile/:userId" element={<ProfilePage/>}/>
           <Route path="/search" element={<SearchPage/>}/>
           <Route path="/friends" element={<FriendsPage/>}/>
-          <Route path="/disk" element={<DiskPage/>}/>
+          <Route path="/disk/*" element={<DiskPage/>}/>
           <Route path="messages/">
             <Route index element={<Navigate to={'/messages/peers'}/>}/>
             <Route path="peers" element={<ChatPeers/>}/>

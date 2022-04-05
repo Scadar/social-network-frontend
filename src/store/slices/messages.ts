@@ -8,7 +8,7 @@ export type GroupedMessage = {
   body: {
     _id: string;
     message: string;
-    createdAt: Date;
+    createdAt: string;
   }[]
   chatRoomId: string;
 }

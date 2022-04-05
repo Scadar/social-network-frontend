@@ -1,54 +1,28 @@
-import React, {FC, useState} from 'react';
-import {diskApi} from '../../services/diskService';
-import {Box, Button, Paper, TextField} from '@mui/material';
+import React, {FC} from 'react';
+import {Box} from '@mui/material';
 import Loading from '../../components/UI/Loading';
-import {toast} from 'react-toastify';
+import FileList from './FileList';
+import FlexCenter from '../../components/UI/FlexCenter';
+import {IFile} from '../../models/file';
 
-const DiskCenterPanel: FC = () => {
+type DiskCenterPanelProps = {
+  files?: IFile[]
+  onDoubleClickFile: (file: IFile) => void
+  isLoading: boolean
+}
 
-  const [dirName, setDirName] = useState('');
-
-  const [parentId, setParentId] = useState<string | undefined>(undefined);
-  const [createDir] = diskApi.useCreateDirMutation();
-  const {data, isLoading, error} = diskApi.useGetFilesByParentQuery({parentId: parentId});
-
-  const handleCreateDir = () => {
-    if (!dirName) return;
-
-    createDir({name: dirName})
-        .unwrap()
-        .then(() => {
-          toast.success('Папка создана');
-          setDirName('');
-        })
-        .catch(() => {
-          toast.error('Ошибка');
-        });
-  };
+const DiskCenterPanel: FC<DiskCenterPanelProps> = ({files, onDoubleClickFile, isLoading}) => {
 
   if (isLoading) {
-    return <Loading/>;
+    return <FlexCenter sx={{height: '100%'}}><Loading/></FlexCenter>;
   }
 
   return (
-      <Box sx={{p: 1}}>
-        <Box>
-          <TextField value={dirName} onChange={e => setDirName(e.target.value)}/>
-          <Button onClick={handleCreateDir}>Создать</Button>
-        </Box>
-        {
-            data && data.length === 0 && <Box>Пусто</Box>
-        }
-        {
-          data?.map(file => {
-            return (
-                <Paper variant={'outlined'} key={file._id}>
-                  {file.name}
-                </Paper>
-            );
-          })
-        }
-
+      <Box sx={{p: 1, height: '100%'}}>
+        <FileList
+            files={files}
+            onDoubleClickFile={onDoubleClickFile}
+        />
       </Box>
   );
 };
