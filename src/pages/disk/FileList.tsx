@@ -4,6 +4,7 @@ import {Box, Stack, Typography} from '@mui/material';
 import {IFile} from '../../models/file';
 import FlexCenter from '../../components/UI/FlexCenter';
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
+import FolderOutlinedIcon from '@mui/icons-material/FolderOutlined';
 
 type FileListType = {
   files?: IFile[]
@@ -18,11 +19,18 @@ const FileList: FC<FileListType> = ({files, onDoubleClickFile}) => {
   };
 
   return (
-      <Box sx={{height: '100%'}}>
+      <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            flexGrow: 1,
+            overflow: 'hidden'
+          }}
+      >
         {
           !files || !files.length
               ?
-              <FlexCenter sx={{height: '100%'}}>
+              <FlexCenter sx={{flexGrow: 1}}>
                 <Typography>Папка пуста</Typography>
               </FlexCenter>
               :
@@ -41,7 +49,13 @@ const FileList: FC<FileListType> = ({files, onDoubleClickFile}) => {
                         })}
                         onDoubleClick={() => onDoubleClickFile(file)}
                     >
-                      <FolderOpenOutlinedIcon/>
+                      {
+                        file.childrenIds.length
+                            ?
+                            <FolderOpenOutlinedIcon/>
+                            :
+                            <FolderOutlinedIcon/>
+                      }
                       <Typography
                           noWrap
                           sx={{

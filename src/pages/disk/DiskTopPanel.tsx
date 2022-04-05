@@ -61,13 +61,13 @@ const DiskTopPanel: FC<DiskTopPanelProps> = ({parentId, path}) => {
     const result: { path: string, href: string }[] = [];
     path.forEach((p, index) => {
       result.push({
-        path: p,
+        path: p.replaceAll('%20', ' '),
         href: path.slice(0, index + 1).join('/'),
       });
     });
     return result;
   }, [path]);
-  console.log(pathWithHref);
+
   return (
       <PageTopWrapper sx={{display: 'flex', alignItems: 'center'}}>
         <Stack
@@ -115,7 +115,13 @@ const DiskTopPanel: FC<DiskTopPanelProps> = ({parentId, path}) => {
               {
                 getReverseArr(pathWithHref).map((item, index) => {
                   return (
-                      <Link key={index} underline="hover" color="inherit" href={item.href}>
+                      <Link
+                          key={index}
+                          underline="hover"
+                          color="inherit"
+                          href={item.href}
+                          noWrap
+                      >
                         {item.path}
                       </Link>
                   );

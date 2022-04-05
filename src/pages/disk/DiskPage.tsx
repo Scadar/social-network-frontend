@@ -13,7 +13,7 @@ const DiskPage: FC = () => {
 
   const [path, setPath] = useState<string[]>([]);
 
-  const pathForQuery = useMemo(() => path.join('\\'), [path]);
+  const pathForQuery = useMemo(() => path.join('\\').replaceAll('%20', ' '), [path]);
 
   const {data, isLoading, isSuccess} = diskApi.useGetFilesByPathQuery({path: pathForQuery});
 
@@ -36,7 +36,9 @@ const DiskPage: FC = () => {
   };
 
   const onBack = () => {
-    setPath(prev => prev.splice(-1));
+    const newPath = pathname.split('/').slice(2);
+    newPath.pop();
+    navigate('/disk/' + newPath.join('/'));
   };
 
   return (
@@ -52,6 +54,8 @@ const DiskPage: FC = () => {
                 files={data?.children}
                 isLoading={isLoading}
                 onDoubleClickFile={onDoubleClickFile}
+                selectedFile={data?.file}
+                onBack={onBack}
             />
           }
       />
