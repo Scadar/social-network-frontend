@@ -45,9 +45,3 @@ Created with Express, Socket.IO, React and Typescript
 | My disk                        |   ❌    |
 | Groups                         |   ❌    |
 | Posts                          |   ❌    |
-
-## About
-
-Author: Miroshnikov Roman  
-Email: teghtml@yandex.ru  
-VK: https://vk.com/romantlt  
